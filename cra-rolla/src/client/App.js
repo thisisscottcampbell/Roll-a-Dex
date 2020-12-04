@@ -7,7 +7,7 @@ const App = () => {
 
   const [userName, setUserName] = useState('');
 
-  const submitUser = (name) => setUserName(name);
+  const submitUser = name => setUserName(name);
   
   return !userName ? 
   <UserForm submitUser={submitUser} /> : <Main userName={userName} />
