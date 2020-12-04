@@ -15,6 +15,7 @@ const Main = ({ userName }) => {
     <div>
       <h2>What Up! {userName}</h2>
       <NewTech />
+      <TechList />
     </div>
   );
 };
