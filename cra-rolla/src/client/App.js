@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import UserForm from './components/UserForm';
-import Main from './components/Main';
+import UserForm from './components/Main/UserForm';
+import Main from './components/Main/Main';
 import './App.css';
 
 const App = () => {

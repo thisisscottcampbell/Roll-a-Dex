@@ -1,6 +1,6 @@
 import React from 'react';
-import NewTech from './NewTech/NewTech';
-import TechList from './TechList/TechList';
+import NewTech from '../NewTech/NewTech';
+import TechList from '../TechList/TechList';
 
 
 const Main = ({ userName }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import InputHook from '../hooks/InputHook';
+import InputHook from '../../hooks/InputHook';
 
 const UserForm = ({ submitUser }) => {
   
