@@ -6,14 +6,14 @@ import robots from '../../bots/robots';
 
 const Main = ({ userName }) => {
   
-  const findUser = userName => {
+  const getUserList = userName => {
     const users = robots.filter(bot => bot.name === userName);
     const list = users[0].list;
     return list;
   };
 
   //hit db, check if userName exists
-  const userList = findUser(userName);
+                              //const userList = getUserList(userName);
 
     //if so,
       //set userObj to the user object from database
@@ -21,13 +21,11 @@ const Main = ({ userName }) => {
       //add user to db
       //set userObj to the newly createde user object in database
 
-  const [list, setList] = useState(userList);
-  
+                            //const [list, setList] = useState(userList);
 
-  // useEffect((propName) => {
-  //   console.log(propName);
-  //   findUser(propName);
-  // }, []);
+  const [list, setList] = useState(() => getUserList(userName));
+  
+  //useEffect((userName) => setList(() => getUserList(userName)), [list]);
   
 
   console.log(list);
