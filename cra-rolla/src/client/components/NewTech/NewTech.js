@@ -2,7 +2,7 @@ import React from 'react';
 import TechForm from './TechForm';
 import SearchBar from './SearchBar';
 
-const NewTech = props => {
+const NewTech = ({ updateTech }) => {
 
   return (
     <div>

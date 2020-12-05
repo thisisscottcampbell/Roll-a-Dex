@@ -1,9 +1,9 @@
 import React from 'react';
-import InputHook from '../../hooks/InputHook';
+import inputHook from '../../hooks/inputHook';
 
 const UserForm = ({ submitUser }) => {
   
-  const [input, updateValue, reset] = InputHook('');
+  const [input, updateValue, reset] = inputHook('');
 
   const handleSubmit = e => {
     e.preventDefault();

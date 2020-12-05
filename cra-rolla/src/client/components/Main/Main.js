@@ -6,7 +6,6 @@ import robots from '../../bots/robots';
 
 const Main = ({ userName }) => {
 
-
   const prevProp = useRef(userName);
 
   const getUserList = userName => {
@@ -15,29 +14,23 @@ const Main = ({ userName }) => {
     return list;
   };
 
-  //hit db, check if userName exists
-                              //const userList = getUserList(userName);
-
-    //if so,
-      //set userObj to the user object from database
-    //if not,
-      //add user to db
-      //set userObj to the newly createde user object in database
-
-                            //const [list, setList] = useState(userList);
+  // *** SEE NOTE IN ROBOTS ***
 
   const [list, setList] = useState(() => getUserList(userName));
   const [newTech, setTech] = useState({});
   
 
-
-  const updateListState = (techObj) => {
+  const updateList = (techObj) => {
     setList([...list, techObj]);
+  }
+
+  const updateTech = techObj => {
+    setTech(techObj);
+    updateList(techObj);
   }
   
   useEffect(() => {
-   // add techObj to db;
-      //grab name
+   
     const userName = prevProp.current;
     const tech = newTech;
 
@@ -48,11 +41,9 @@ const Main = ({ userName }) => {
       if (bot.name === userName) userIdx = i;
     })
 
-    //update db
     robots[userIdx].list.push(tech);
 
     console.log('useEffect:', prevProp.current, ':', list);
-
   }, [list, newTech]);
   
 
@@ -60,7 +51,7 @@ const Main = ({ userName }) => {
   return (
     <div>
       <h2>What Up! {userName}</h2>
-      <NewTech />
+      <NewTech updateTech={updateTech} />
       <TechList list={list} /> 
     </div>
   );

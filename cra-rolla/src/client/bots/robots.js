@@ -37,3 +37,14 @@ export default robots;
   //   email: 'Julianne.OConner@kory.org'
   // });
   // console.log(robots);
+
+  // hit db, check if userName exists
+                              //const userList = getUserList(userName);
+
+    //if so,
+      //set userObj to the user object from database
+    //if not,
+      //add user to db
+      //set userObj to the newly createde user object in database
+
+                            //const [list, setList] = useState(userList);
