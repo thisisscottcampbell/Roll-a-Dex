@@ -27,3 +27,13 @@ const robots = [
 ];
 
 export default robots;
+
+
+  //console.log(robots);
+  // robots.push({
+  //   id: 4,
+  //   name: 'Patricia Lebsack',
+  //   username: 'Karianne',
+  //   email: 'Julianne.OConner@kory.org'
+  // });
+  // console.log(robots);
