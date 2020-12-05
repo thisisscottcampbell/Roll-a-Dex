@@ -5,6 +5,7 @@ const TechForm = ({ updateTech }) => {
   const [idValue, handleIdChange, idReset] = inputHook('');
   const [titleValue, handleTitleChange, titleReset] = inputHook('');
   const [dateValue, handleDateChange, dateReset] = inputHook('');
+  const [noteValue, handleNoteChange, noteReset] = inputHook('');
 
   const formSubmit = e => {
     e.preventDefault();
@@ -15,6 +16,7 @@ const TechForm = ({ updateTech }) => {
       idReset();
       titleReset();
       dateReset();
+      noteReset();
     }
     resetAll()
   }
@@ -37,11 +39,17 @@ const TechForm = ({ updateTech }) => {
           value={dateValue} 
           onChange={handleDateChange} 
         />
+          <input
+          type='text'
+          value={noteValue} 
+          onChange={handleNoteChange} 
+        />
       </form>
       <div>
         {idValue}
         {titleValue}
         {dateValue}
+        {noteValue}
       </div>
       </>
   );
