@@ -13,13 +13,14 @@ const UserForm = ({ submitUser }) => {
   }
 
   return (
-    <div>
-      <h1>Sign in</h1> 
+    <div className='pa2'>
+      <h1 className='f1'>Sign in</h1> 
       <form onSubmit={handleSubmit}>  
         <input 
           type='text'
           value={input} 
           onChange={updateValue}
+          className='pa3 ba b--green bg-lightest-blue'
         />
       </form> 
     </div>

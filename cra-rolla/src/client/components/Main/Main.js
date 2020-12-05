@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import NewTech from '../NewTech/NewTech';
 import TechList from '../TechList/TechList';
 import robots from '../../bots/robots';
+import Scroll from '../TechList/Scroll';
+
 const db = robots;
 
 const Main = ({ userName }) => {
@@ -42,9 +44,11 @@ const Main = ({ userName }) => {
   console.log(list);
   return (
     <div>
-      <h2>What Up! {userName}</h2>
+      <h2 className='f2 washed-red'>{userName}'s Roll-a-Dex</h2>
       <NewTech updateList={updateList} />
-      <TechList list={list} /> 
+      <Scroll>
+        <TechList list={list} />
+      </Scroll> 
     </div>
   );
 };

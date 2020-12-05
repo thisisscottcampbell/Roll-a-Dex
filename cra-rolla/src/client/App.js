@@ -9,8 +9,15 @@ const App = () => {
 
   const submitUser = name => setUserName(name);
   
-  return !userName ? 
-  <UserForm submitUser={submitUser} /> : <Main userName={userName} />
+  return (
+    <div className='App tc'>
+      {
+        !userName ? 
+          <UserForm submitUser={submitUser} /> : 
+          <Main userName={userName} />
+      }
+    </div>
+  )
 
 }
 

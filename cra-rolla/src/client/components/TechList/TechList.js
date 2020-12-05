@@ -4,13 +4,6 @@ import TechCard from './TechCard';
 
 const TechList = ({ list }) => {
 
-  //state, initially, is the list from props
-    //BUT, pass onClick that allows to update that list to just single item  
-
-  // const [techList, updateList] = useState(list);
-
-  //const handleClick = () => {console.log('click')};
-
   const techniqueEntries = list.map(tech => {
     // <Link>
     console.log(tech);
@@ -28,7 +21,6 @@ const TechList = ({ list }) => {
 
   return (
     <div>
-      <h3>i am tech list</h3>
       {
         techniqueEntries
       }

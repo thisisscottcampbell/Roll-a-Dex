@@ -6,7 +6,7 @@ const NewTech = ({ updateList }) => {
 
   return (
     <div>
-      <h4>i am newtech</h4>
+      <h4 className='f4 washed-blue'>Today's Technique</h4>
       <TechForm updateList={updateList} />
       <SearchBar />
     </div>
