@@ -7,7 +7,7 @@ const NewTech = ({ updateTech }) => {
   return (
     <div>
       <h4>i am newtech</h4>
-      <TechForm />
+      <TechForm updateTech={updateTech} />
       <SearchBar />
     </div>
   );
