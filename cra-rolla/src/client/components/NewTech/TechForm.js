@@ -2,20 +2,21 @@ import React from 'react';
 import inputHook from '../../hooks/inputHook';
 
 const TechForm = ({ updateTech }) => {
-  const [idValue, handleIdChange, idReset] = inputHook('');
+
   const [titleValue, handleTitleChange, titleReset] = inputHook('');
-  const [dateValue, handleDateChange, dateReset] = inputHook('');
   const [noteValue, handleNoteChange, noteReset] = inputHook('');
 
   const formSubmit = e => {
     e.preventDefault();
 
-    updateTech({});
+    updateTech({
+      title: titleValue, 
+      date: new Date().toString().slice(0, 15), 
+      note: noteValue
+    });
 
     const resetAll = () => {
-      idReset();
       titleReset();
-      dateReset();
       noteReset();
     }
     resetAll()
@@ -26,29 +27,19 @@ const TechForm = ({ updateTech }) => {
       <form onSubmit={formSubmit}>
         <input
           type='text'
-          value={idValue} 
-          onChange={handleIdChange} 
-        />
-        <input
-          type='text'
           value={titleValue} 
-          onChange={handleTitleChange} 
-        />
-        <input
-          type='text'
-          value={dateValue} 
-          onChange={handleDateChange} 
+          onChange={handleTitleChange}
+          placeholder='technique name' 
         />
           <input
           type='text'
           value={noteValue} 
-          onChange={handleNoteChange} 
+          onChange={handleNoteChange}
+          placeholder='notes' 
         />
       </form>
       <div>
-        {idValue}
         {titleValue}
-        {dateValue}
         {noteValue}
       </div>
       </>
