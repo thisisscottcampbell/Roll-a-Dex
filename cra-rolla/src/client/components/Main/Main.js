@@ -17,22 +17,13 @@ const Main = ({ userName }) => {
   // *** SEE NOTE IN ROBOTS ***
 
   const [list, setList] = useState(() => getUserList(userName));
-  const [newTech, setTech] = useState({});
-  
 
-  const updateList = (techObj) => {
-    setList([...list, techObj]);
-  }
-
-  const updateTech = techObj => {
-    setTech(techObj);
-    updateList(techObj);
-  }
+  const updateList = newTech => setList([...list, newTech])
   
   useEffect(() => {
    
     const userName = prevProp.current;
-    const tech = newTech;
+    const tech = list[list.length - 1];
 
     let userIdx;
 
@@ -45,14 +36,14 @@ const Main = ({ userName }) => {
     console.log(db[userIdx].list);
 
     console.log('useEffect:', prevProp.current, ':', list);
-  }, [list, newTech]);
+  }, [list]);
   
 
   console.log(list);
   return (
     <div>
       <h2>What Up! {userName}</h2>
-      <NewTech updateTech={updateTech} />
+      <NewTech updateList={updateList} />
       <TechList list={list} /> 
     </div>
   );

@@ -2,12 +2,12 @@ import React from 'react';
 import TechForm from './TechForm';
 import SearchBar from './SearchBar';
 
-const NewTech = ({ updateTech }) => {
+const NewTech = ({ updateList }) => {
 
   return (
     <div>
       <h4>i am newtech</h4>
-      <TechForm updateTech={updateTech} />
+      <TechForm updateList={updateList} />
       <SearchBar />
     </div>
   );
