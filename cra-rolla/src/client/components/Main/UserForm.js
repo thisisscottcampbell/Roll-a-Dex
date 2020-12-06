@@ -14,7 +14,7 @@ const UserForm = ({ submitUser }) => {
 
   return (
     <div className='pa2'>
-      <h1 className='f1'>Sign in</h1> 
+      <h1 className='f1 b'>Sign in</h1> 
       <form onSubmit={handleSubmit}>  
         <input 
           type='text'

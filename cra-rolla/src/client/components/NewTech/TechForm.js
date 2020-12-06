@@ -37,7 +37,7 @@ const TechForm = ({ updateList }) => {
           placeholder='technique name'
           className='pa1 ba b--green bg-lightest-blue' 
         />
-          <input
+        <input
           type='text'
           value={noteValue} 
           onChange={handleNoteChange}
@@ -48,6 +48,7 @@ const TechForm = ({ updateList }) => {
       <button 
         onClick={handleClick}
         className="f6 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib dark-blue"
+        style={{marginTop: '1.5em'}}
       >Add Technique</button>
       <div>
         {titleValue}

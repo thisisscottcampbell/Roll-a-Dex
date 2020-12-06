@@ -3,6 +3,7 @@ import NewTech from '../NewTech/NewTech';
 import TechList from '../TechList/TechList';
 import robots from '../../bots/robots';
 import Scroll from '../TechList/Scroll';
+import { uuid } from 'uuidv4';
 
 const db = robots;
 
@@ -10,32 +11,42 @@ const Main = ({ userName }) => {
   
   const prevProp = useRef(userName);
 
+  const findUser = name => db.some(user=> user.name === name);
+
+  const userExists = findUser(userName);
+
+  if(!userExists) db.push({
+    id: uuid(), 
+    name: userName, 
+    email: `${userName}@userName.com`, 
+    list: [] 
+  });
+
   const getUserList = userName => {
     const users = db.filter(user => user.name === userName);
     const list = users[0].list;
     return list;
   };
 
-  // *** SEE NOTE IN ROBOTS ***
 
   const [list, setList] = useState(() => getUserList(userName));
+  const len = useRef(list.length);
 
   const updateList = newTech => setList([...list, newTech])
   
   useEffect(() => {
-   
+    if (len.current === list.length) return db;
+  
     const userName = prevProp.current;
     const tech = list[list.length - 1];
 
     let userIdx;
 
     db.forEach((user, i) => {
-      console.log(user.name === userName)
       if (user.name === userName) userIdx = i;
     })
 
     db[userIdx].list.push(tech);
-    console.log(db[userIdx].list);
 
     console.log('useEffect:', prevProp.current, ':', list);
   }, [list]);
