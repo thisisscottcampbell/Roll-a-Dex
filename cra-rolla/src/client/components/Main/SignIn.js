@@ -1,7 +1,7 @@
 import React from 'react';
 import inputHook from '../../hooks/inputHook';
 
-const UserForm = ({ submitUser }) => {
+const SignIn = ({ submitUser }) => {
   
   const [input, updateValue, reset] = inputHook('');
 
@@ -27,4 +27,4 @@ const UserForm = ({ submitUser }) => {
   );
 };
 
-export default UserForm;
+export default SignIn;

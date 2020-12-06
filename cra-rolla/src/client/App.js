@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserForm from './components/Main/UserForm';
+import SignIn from './components/Main/SignIn';
 import Main from './components/Main/Main';
 import './App.css';
 
@@ -13,7 +13,7 @@ const App = () => {
     <div className='App tc'>
       {
         !userName ? 
-          <UserForm submitUser={submitUser} /> : 
+          <SignIn submitUser={submitUser} /> : 
           <Main userName={userName} />
       }
     </div>

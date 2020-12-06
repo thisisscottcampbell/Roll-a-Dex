@@ -31,18 +31,21 @@ const TechForm = ({ updateList }) => {
       <>
       <form>
         <input
+          style={{width: '13rem'}}
           type='text'
           value={titleValue} 
           onChange={handleTitleChange}
           placeholder='technique name'
-          className='pa1 ba b--green bg-lightest-blue' 
+          className='pa1 ba b--light-blue bg-lightest-blue' 
         />
-        <input
+        <br/>
+        <textarea
+          style={{width: '13rem', height: '7rem'}}
           type='text'
           value={noteValue} 
           onChange={handleNoteChange}
           placeholder='notes'
-          className='pa1 ba b--green bg-lightest-blue' 
+          className='pa1 ba b--green bg-washed-green' 
         />
       </form>
       <button 
@@ -50,10 +53,10 @@ const TechForm = ({ updateList }) => {
         className="f6 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib dark-blue"
         style={{marginTop: '1.5em'}}
       >Add Technique</button>
-      <div>
+      {/* <div>
         {titleValue}
         {noteValue}
-      </div>
+      </div> */}
       </>
   );
 };
