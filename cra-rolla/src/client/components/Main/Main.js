@@ -4,45 +4,49 @@ import TechList from '../TechList/TechList';
 import robots from '../../bots/robots';
 import Scroll from '../TechList/Scroll';
 import { uuid } from 'uuidv4';
+import { getUserList, findUser } from '../../../utils/utils'
 
 const db = robots;
 
 const Main = ({ userName }) => {
   
-  //keep value of passed in user name
+  //keep value of prop in variable
   const prevProp = useRef(userName);
-
-  //returns true or false if user is in db
-  const findUser = name => db.some(user=> user.name === name);
-
-  //assign true or false to label
-  const userExists = findUser(userName);
-
-  //if the user does not exist, add to db with user obj
+  //assign boolen, user exists in db
+  const userExists = findUser(userName, db);
+  //if the user does not exist, add to db with new user obj
   if(!userExists) db.push({
     id: uuid(), 
     name: userName, 
     email: `${userName}@userName.com`, 
     list: [] 
   });
-  
-  //grab list of techniques off of user obj
-  const getUserList = userName => {
-    const users = db.filter(user => user.name === userName);
-    const list = users[0].list;
-    return list;
-  };
 
-
+    //INIT STATE
   //set state, the user's list of techniques
-  const [list, setList] = useState(() => getUserList(userName));
-
-  //assign true to variable to determine if we are running on first render
+  const [list, setList] = useState(() => getUserList(userName, db));
+  //assign true to variable on first render
   let firstRender = useRef(true);
 
+
+    //STATE FUNCTIONS
   //when we get a new technique, we update state
-  const updateList = newTech => setList([...list, newTech])
+  const updateList = newTech => setList([...list, newTech]);
+  //delete a technique
+  const deleteTech = id => {
+    let idx;
+
+    list.forEach((tech, i) => {
+      if (id.current === tech.id) idx = i
+    })
+
+    list.splice(idx, 1)
+
+    setList([...list])
+  };
   
+    //USE EFFECT FUNCTIONALITY
+  //locate user in db, render their list of techniques
   useEffect(() => {
 
     //only update firstRender to false if on first render
@@ -71,13 +75,15 @@ const Main = ({ userName }) => {
   }, [list]);
   
 
-  
   return (
     <div>
       <h2 className='f2 light-green'>{userName}'s Roll-a-Dex</h2>
       <NewTech updateList={updateList} />
       <Scroll>
-        <TechList list={list} />
+        <TechList 
+          list={list}
+          deleteTech={deleteTech} 
+        />
       </Scroll> 
     </div>
   );

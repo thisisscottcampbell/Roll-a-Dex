@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TechCard from './TechCard';
 //import { Link } from 'react-router-dom';
 
-const TechList = ({ list }) => {
+const TechList = ({ list, deleteTech }) => {
 
   const techniqueEntries = list.map(tech => {
     // <Link>
@@ -14,7 +14,7 @@ const TechList = ({ list }) => {
         date={tech.date}
         note={tech.note}
         video={tech.video}
-        //handleClick={handleClick}
+        deleteTech={deleteTech}
       />
     // </Link> 
   })

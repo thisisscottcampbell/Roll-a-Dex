@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-const TechCard = ({ title, date, note, video }) => {
+const TechCard = ({ title, date, note, video, deleteTech, id }) => {
+  const refID = useRef(id);
+
+  const handleClick = (val) => deleteTech(val);
 
   return (
     <div className='tc bg-light-green dib br3 pa3 ma2 grow bw2 shadow-5'>
@@ -11,7 +14,7 @@ const TechCard = ({ title, date, note, video }) => {
       </div>
       <p>{video}</p>  
       <button 
-        //onClick={handleClick}
+        onClick={() => handleClick(refID)}
         className="f6 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib light-red"
         style={{marginTop: '.5'}}
       >Delete</button>
