@@ -44,6 +44,10 @@ const Main = ({ userName }) => {
 
     setList([...list])
   };
+  //edit technique
+  const editTech = id => {
+    console.log(`how to edit ${id.current}...`)
+  }
   
     //USE EFFECT FUNCTIONALITY
   //locate user in db, render their list of techniques
@@ -82,7 +86,8 @@ const Main = ({ userName }) => {
       <Scroll>
         <TechList 
           list={list}
-          deleteTech={deleteTech} 
+          deleteTech={deleteTech}
+          editTech={editTech} 
         />
       </Scroll> 
     </div>
