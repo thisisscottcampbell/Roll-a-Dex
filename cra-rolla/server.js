@@ -1,7 +1,9 @@
 const express = require('express');
+const connectDb = require('./db_configs/connectDb');
 
 const app = express();
 
+connectDb();
 
 app.get('/', (req, res) => res.send('Yoooo'))
 
