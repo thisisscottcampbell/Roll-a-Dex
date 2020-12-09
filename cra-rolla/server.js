@@ -7,7 +7,7 @@ connectDb();
 
 app.use(express.json({ extended: false }))
 
-app.get('/', (req, res) => res.send('Yoooo'))
+app.get('/', (req, res) => res.send('i am server'))
 
 //at specified end point, execute the required file
 app.use('/api/list', require('./routes/list')); 

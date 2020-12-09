@@ -14,12 +14,38 @@ router.get('/', verifyUser,
     res.json(userList);
   }
   catch (err) {
+    console.log(err.message);
     res.status(500).send(err.message);
   }
 })
 
-router.post('/', (req, res) => {
-  res.send('Post tech to list')
+router.post('/', verifyUser, 
+  [
+    check('title', 'Please add title')
+    .not()
+    .isEmpty()
+  ], 
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    
+    const { id } = req.user;
+    const { title, note, } = req.body;
+
+    try {
+      const newTech = new Tech({
+        title,
+        note,
+        user: id
+      });
+
+      const tech = await newTech.save();
+      res.json(tech);
+    }
+    catch (err) {
+      console.error(err.message);
+      return res.status(500).send('Server Error');
+    }
 })
 
 router.put('/:id', (req, res) => {

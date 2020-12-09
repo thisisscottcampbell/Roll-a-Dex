@@ -7,7 +7,7 @@ const TechSchema = new Schema({
     ref: 'users'
     //'ref' refers to the collection in the database
   },
-  title: {
+  title: { 
     type: String
   },
   note: {

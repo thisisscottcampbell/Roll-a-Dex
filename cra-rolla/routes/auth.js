@@ -60,7 +60,8 @@ router.post(
       });
 
     } catch (err) {
-      return res.status(500).send(err.message);
+      console.error(err.message);
+      return res.status(500).send('Server Error');
     }
 });
 
