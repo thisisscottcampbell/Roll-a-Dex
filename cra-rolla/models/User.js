@@ -8,15 +8,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  list: [
-    // {
-    //   id: String,
-    //   title: String,
-    //   date: String,
-    //   note: String,
-    //   //video: [Schema.Types.Mixed]
-    // }
-  ],
+  list: [],
   password: {
     type: String,
     required: true,

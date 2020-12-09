@@ -13,7 +13,7 @@ const verifyUser = (req, res, next) => {
     next();
 
   } catch(err) {
-    res.status(401).json({msg: 'Bad token'});
+    return res.status(401).json({msg: 'Bad token'});
   }
 }
 

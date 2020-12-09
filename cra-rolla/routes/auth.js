@@ -13,7 +13,7 @@ router.get('/', verifyUser, async (req, res) => {
 
   try {
     const user = await User.findById(id).select('-password');
-    res.json(user);
+    return res.json(user);
   }
   catch (err) {
     res.status(500).send(err.message);
