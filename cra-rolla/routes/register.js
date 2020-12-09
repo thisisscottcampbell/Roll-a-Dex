@@ -48,12 +48,12 @@ router.post(
        expiresIn: 360000
      }, (err, token) => {
        if (err) throw err;
-       res.json({ token });
+       return res.json({ token });
      })
-    //  return res.status(200).json({msg: 'user saved'});
    }
+
    catch (err) {
-     res.send(err.message);
+     return res.status(500).send(err.message);
    }
 });
 
