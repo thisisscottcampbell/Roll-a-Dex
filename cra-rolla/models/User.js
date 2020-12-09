@@ -8,7 +8,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  list: [],
   password: {
     type: String,
     required: true,

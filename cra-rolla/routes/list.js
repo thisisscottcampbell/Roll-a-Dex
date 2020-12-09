@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const verifyUser = require('../controllers/auth')
+const { check, validationResult } = require('express-validator');
+const User = require('../models/User');
+const Tech = require('../models/Tech');
 
 
-router.get('/', (req, res) => {
-  res.send('Get entire list')
+router.get('/', verifyUser, 
+  async (req, res) => {
+  try {
+    //req.user.id is brought in from verifyUser, and that is then used to compare against the user object in 'Tech'
+    const userList = await Tech.find({ user: req.user.id }).sort({ date: -1 });
+    res.json(userList);
+  }
+  catch (err) {
+    res.status(500).send(err.message);
+  }
 })
 
 router.post('/', (req, res) => {
