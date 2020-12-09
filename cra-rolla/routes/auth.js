@@ -3,15 +3,24 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const verifyUser = require('../controllers/auth')
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 //get logged in user
-router.get('/', (req, res) => { 
-  return res.send('return existent user')
+router.get('/', verifyUser, async (req, res) => { 
+  const {id} = req.user;
+
+  try {
+    const user = await User.findById(id).select('-password');
+    res.json(user);
+  }
+  catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
-//log in, grab token
+//authenticate with token
 router.post(
   '/', 
   [
