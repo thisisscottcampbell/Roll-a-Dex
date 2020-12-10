@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SignIn from './components/Main/SignIn';
+import SignUp from './components/Main/SignUp';
 import Main from './components/Main/Main';
 import './App.css';
 
 const App = () => {
 
-  const [userName, setUserName] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('')
+ 
+  const submitUser = (name, password) => {
 
-  const submitUser = name => setUserName(name);
-  
+    setName(name);
+    setPassword(password)
+  };
+
+
   return (
     <div className='App tc'>
       {
-        !userName ? 
-          <SignIn submitUser={submitUser} /> : 
-          <Main userName={userName} />
+        password ?
+          <Main name={name} password={password} />
+          :
+          <> 
+            <SignIn submitUser={submitUser} />
+            <SignUp submitUser={submitUser} />
+          </>
       }
     </div>
   )

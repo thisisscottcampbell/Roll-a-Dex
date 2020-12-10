@@ -1,7 +1,7 @@
 import React from 'react';
 import inputHook from '../../hooks/inputHook';
 
-const SignIn = ({ submitUser }) => {
+const SignUp = ({ submitUser }) => {
   
   const [userInput, updateUserValue, resetUser] = inputHook('');
   const [pwInput, updatePwValue, resetPw] = inputHook('');
@@ -17,7 +17,7 @@ const SignIn = ({ submitUser }) => {
 
   return (
     <div className='pa2'>
-      <h1 className='f1 b'>Sign in</h1>
+      <h1 className='f1 b'>Sign Up</h1> 
         <input 
           type='text'
           value={userInput} 
@@ -32,12 +32,9 @@ const SignIn = ({ submitUser }) => {
           placeholder="password"
           className='pa3 ba b--green bg-lightest-blue'
         />
-      <button onClick={handleSubmit}>submit</button>
-      <div className='pa2'>
-        <h1>OR</h1>
-      </div>
+      <button onClick={handleSubmit}>submit</button> 
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp

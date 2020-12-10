@@ -53,6 +53,7 @@ router.put('/:id', verifyUser,
   async (req, res) => {
 
   const { title, note } = req.body;
+  const { id } = req.params;
 
   const techVals = {};
   
@@ -60,13 +61,13 @@ router.put('/:id', verifyUser,
   if (note) techVals.note = note;
 
   try {
-    let editTech = await Tech.findById(req.params.id);
+    let editTech = await Tech.findById(id);
 
     if (!editTech) return res.status(404).json({ msg: 'Cannot locate item' });
 
     if (editTech.user.toString() !== req.user.id) return res.status(401).json({ msg: "No PUT auth"});
     
-    editTech = await Tech.findByIdAndUpdate(req.params.id,
+    editTech = await Tech.findByIdAndUpdate(id,
       { $set: techVals },
       { new: true });
 
@@ -78,8 +79,26 @@ router.put('/:id', verifyUser,
   }
 })
 
-router.delete('/:id', (req, res) => {
-  res.send('Delete tech')
+router.delete('/:id', verifyUser, 
+  async (req, res) => {
+
+  const { id } = req.params;
+
+  try {
+    let delTech = await Tech.findById(req.params.id);
+
+    if (!delTech) return res.status(404).json({ msg: 'Cannot locate item' });
+
+    if (delTech.user.toString() !== req.user.id) return res.status(401).json({ msg: "No DELETE auth"});
+    
+    await Tech.findByIdAndRemove(id);
+
+    res.json({msg: 'delete successful'});
+  }
+  catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
 })
 
 module.exports = router;
