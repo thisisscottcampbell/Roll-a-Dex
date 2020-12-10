@@ -7,16 +7,22 @@ const Tech = require('../models/Tech');
 const { networkInterfaces } = require('os');
 
 
-router.get('/', verifyUser, 
+router.get('/', //verifyUser, 
   async (req, res) => {
   try {
     //req.user.id is brought in from verifyUser, and that is then used to compare against the user object in 'Tech'
-    const userList = await Tech.find({ user: req.user.id }).sort({ date: -1 });
+    const body = JSON.parse(req.query.body);
+    const name = body.name;
+    const password = body.password;
+    const token = body.token.token;
+ 
+
+    const userList = await Tech.find({ name: name }).sort({ date: -1 });
     res.json(userList);
   }
   catch (err) {
     console.log(err.message);
-    res.status(500).send(err.message);
+    res.status(500).json(err.message);
   }
 })
 
