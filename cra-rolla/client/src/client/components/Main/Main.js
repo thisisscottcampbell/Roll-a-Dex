@@ -1,9 +1,9 @@
 import React 
-  //,{ 
+  ,{ 
   //useState, 
   //useEffect, 
-  //useRef 
-//} 
+  useRef 
+} 
   from 'react';
 // import NewTech from '../NewTech/NewTech';
 // import TechList from '../TechList/TechList';
@@ -20,10 +20,10 @@ const Main = ({ name, password }) => {
   console.log(name, password);
   
 
-  //const prevProp = useRef(userData);
-  // name = prevProp.current.name;
-  // password = prevProp.current.password;
-  // console.log(name, password);
+  const prevName = useRef(name);
+  const prevPassword = useRef(password);
+  
+  console.log(prevName.current, prevPassword.current);
 
   // const name = prevProp.current.name;
   // const password = prevProp.current.password;
