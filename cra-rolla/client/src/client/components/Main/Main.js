@@ -33,7 +33,19 @@ const Main = ({ name, password, token }) => {
     setList([...list])
   };
   //put tech
-  const editTech = (putObj) => setPutObj(putObj)
+  const editTech = (putObj) => setPutObj(putObj);
+
+  const fetchAll = (token) => {
+    axios.get('http://localhost:5000/api/list', {
+      headers: {
+        'x-auth-token': token
+      }
+     })
+      .then(res => {
+        setList(res.data);
+      })
+      .catch(error => console.log(error.message));
+  }
   
   //USE EFFECT
 
@@ -49,7 +61,7 @@ const Main = ({ name, password, token }) => {
       }
      })
       .then(res => {
-        setList((list) => [...list, ...res.data]);
+        setList(res.data);
       })
       .catch(error => console.log(error.message));
 
@@ -114,20 +126,8 @@ const Main = ({ name, password, token }) => {
           'x-auth-token': sendToken
         }
     })
-      .then(res => res.data)
+      .then(res => fetchAll(sendToken))
       .catch(error => console.log(error.message))
-
-      axios.get('http://localhost:5000/api/list', {
-        headers: {
-          'x-auth-token': sendToken
-        }
-       })
-        .then(res => {
-          setList(res.data);
-        })
-        .catch(error => console.log(error.message));
-
-      setPutObj({});
 
    }, [putObj])
 
