@@ -7,22 +7,16 @@ const Tech = require('../models/Tech');
 const { networkInterfaces } = require('os');
 
 
-router.get('/', //verifyUser, 
+router.get('/', verifyUser, 
   async (req, res) => {
   try {
     //req.user.id is brought in from verifyUser, and that is then used to compare against the user object in 'Tech'
-    const body = JSON.parse(req.query.body);
-    const name = body.name;
-    const password = body.password;
-    const token = body.token.token;
- 
-
-    const userList = await Tech.find({ name: name }).sort({ date: -1 });
+    const userList = await Tech.find({ user: req.user.id }).sort({ date: -1 });
     res.json(userList);
   }
   catch (err) {
     console.log(err.message);
-    res.status(500).json(err.message);
+    res.status(500).send(err.message);
   }
 })
 
@@ -37,6 +31,7 @@ router.post('/', verifyUser,
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
     
     const { id } = req.user;
+    console.log(id);
     const { title, note, } = req.body;
 
     try {
@@ -94,13 +89,13 @@ router.delete('/:id', verifyUser,
     let delTech = await Tech.findById(req.params.id);
 
     if (!delTech) return res.status(404).json({ msg: 'Cannot locate item' });
-
     if (delTech.user.toString() !== req.user.id) return res.status(401).json({ msg: "No DELETE auth"});
     
     await Tech.findByIdAndRemove(id);
 
     res.json({msg: 'delete successful'});
   }
+  
   catch (err) {
     console.error(err.message);
     return res.status(500).send('Server Error');

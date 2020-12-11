@@ -1,8 +1,8 @@
 import React from 'react';
 import inputHook from '../../hooks/inputHook';
-import { uuid } from 'uuidv4';
+//import { uuid } from 'uuidv4';
 
-const TechForm = ({ updateList }) => {
+const TechForm = ({ addTech, name }) => {
 
   const [titleValue, handleTitleChange, titleReset] = inputHook('');
   const [noteValue, handleNoteChange, noteReset] = inputHook('');
@@ -15,13 +15,11 @@ const TechForm = ({ updateList }) => {
   const handleClick = e => {
     e.preventDefault();
 
-    console.log(uuid());
-
-    updateList({
-      id: uuid(),
+    addTech({
       title: titleValue, 
-      date: new Date().toString().slice(0, 15), 
-      note: noteValue
+      //date: new Date().toString().slice(0, 15), 
+      note: noteValue,
+      name: name
     });
     
     resetAll()

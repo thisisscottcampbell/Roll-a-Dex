@@ -23,6 +23,7 @@ const App = () => {
 
     axios.post('http://localhost:5000/api/auth', userObj)
       .then(res => {
+        console.log(res.data);
         setToken(res.data);
       })
       .catch(error => console.log(error))
