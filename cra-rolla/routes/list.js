@@ -27,8 +27,7 @@ router.post('/', verifyUser,
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
     
     const { id } = req.user;
-    console.log(id);
-    const { title, note, } = req.body;
+    const { title, note, } = req.body.newTech;
 
     try {
       const newTech = new Tech({
