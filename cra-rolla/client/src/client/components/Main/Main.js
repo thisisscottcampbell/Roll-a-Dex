@@ -9,14 +9,13 @@ const Main = ({ name, password, token }) => {
   //const prevName = useRef(name);
   //const prevPassword = useRef(password);
   const prevToken = useRef(token);
-
+  
   //console.log(prevName, prevPassword, prevToken);
 
     //INIT STATE
   const [list, setList] = useState([])//needs to be user list;
   const [newTech, setTech] = useState({})
-  const [runDelete, setDelete] = useState(false);
-  const [dbID, setID] = useState('');
+  const [deleteID, setDeleteID] = useState('');
   
     //STATE FUNCTIONS
   //add tech
@@ -31,8 +30,7 @@ const Main = ({ name, password, token }) => {
 
     list.splice(idx, 1)
 
-
-    setDelete(true);
+    setDeleteID(id);
     setList([...list])
   };
   
@@ -78,26 +76,25 @@ const Main = ({ name, password, token }) => {
 
    //"delete" USE EFFECT
    useEffect(() => {
-    if (!runDelete) return;
+ 
      console.log('run delete');
 
-      // const sendToken = prevToken.current.token;
+      const sendToken = prevToken.current.token;
 
-      // axios.delete('http://localhost:5000/api/list/:id', 
-      //    { headers: {
-      //       'x-auth-token': sendToken
-      //     },
-      //     params: 
-      // })
-      //   .then(res => {
-      //     setList((list) => [...list, res.data])
-      //   })
-      //   .catch(error => console.log(error.message))
+      axios.delete(`http://localhost:5000/api/list/${deleteID}`, 
+          { headers: {
+            'x-auth-token': sendToken
+          }
+      })
+        .then(res => {
+          setList((list) => [...list, res.data])
+        })
+        .catch(error => console.log(error.message))
 
 
-    setDelete(false);
+    
 
-   }, [runDelete])
+   }, [deleteID], () => console.log(list));
 
   return (
     <div>

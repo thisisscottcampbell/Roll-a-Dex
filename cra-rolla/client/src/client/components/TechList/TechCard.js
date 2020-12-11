@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-const TechCard = ({ title, date, note, video, deleteTech, editTech, id, _id }) => {
-  const refID = useRef(id);
-
+const TechCard = ({ title, date, note, video, deleteTech, editTech, _id }) => {
+  
   const handleDelete = techId => deleteTech(techId);
   const handleEdit = techId => editTech(techId)
 
@@ -20,7 +19,7 @@ const TechCard = ({ title, date, note, video, deleteTech, editTech, id, _id }) =
       >Delete</button>
       <br/>
       <button 
-        onClick={()=> handleEdit(refID)}
+        onClick={()=> handleEdit(_id)}
         className="f6 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib light-green"
         style={{marginTop: '.5'}}
       >Edit</button>
