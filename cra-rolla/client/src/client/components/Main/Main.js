@@ -15,6 +15,17 @@ const Main = ({ name, password, token }) => {
   const [putObj, setPutObj] = useState({})
   
     //STATE FUNCTIONS
+  //get all
+  const fetchAll = (token) => {
+    axios
+    .get('http://localhost:5000/api/list', {
+      headers: {
+        'x-auth-token': token
+        }
+      })
+    .then(res => setList(res.data))
+    .catch(error => console.log(error.message));
+  }
   //add tech
   const addTech = tech => setTech(tech);
   //delete tech
@@ -27,107 +38,95 @@ const Main = ({ name, password, token }) => {
 
     list.splice(idx, 1);
 
-    console.log(list);
-
     setDeleteID(id);
     setList([...list])
   };
   //put tech
   const editTech = (putObj) => setPutObj(putObj);
 
-  const fetchAll = (token) => {
-    axios.get('http://localhost:5000/api/list', {
-      headers: {
-        'x-auth-token': token
-      }
-     })
-      .then(res => {
-        setList(res.data);
-      })
-      .catch(error => console.log(error.message));
-  }
   
-  //USE EFFECT
-
-    //"CDM" USE EFFECT 
+    //USE EFFECT
+  //"cdm"
   useEffect(() => {
     console.log('run for cdm');
 
     const sendToken = prevToken.current.token;
 
-    axios.get('http://localhost:5000/api/list', {
+    axios
+    .get('http://localhost:5000/api/list', {
       headers: {
         'x-auth-token': sendToken
+        }
       }
-     })
-      .then(res => {
-        setList(res.data);
-      })
-      .catch(error => console.log(error.message));
+    )
+    .then(res => setList(res.data))
+    .catch(error => console.log(error.message));
 
   },[]);
 
-   //"tech" USE EFFECT
-   useEffect(() => {
+  //"post" 
+  useEffect(() => {
 
-      if (!newTech.title) return;
-
-      const sendToken = prevToken.current.token;
-
-      axios.post('http://localhost:5000/api/list', 
-        {newTech},
-        { headers: {
-        'x-auth-token': sendToken
-        }
-      })
-        .then(res => {
-          setList((list) => [...list, res.data])
-        })
-        .catch(error => console.log(error.message))
-        
-        setTech({})
-   }, [newTech])
-  
-   //"delete" USE EFFECT
-   useEffect(() => {
-    
-      if (!deleteID) return;
-     console.log('run delete');
-
-      const sendToken = prevToken.current.token;
-
-      axios.delete(`http://localhost:5000/api/list/${deleteID}`, 
-          { headers: {
-            'x-auth-token': sendToken
-          }
-      })
-        .then(res => res.data)
-        .catch(error => console.log(error.message))
-
-   }, [deleteID]);
-
-   //"put" USE EFFECT
-   useEffect(() => {
-
-    if (!putObj.title || !putObj.note) return;
-    console.log('run put');
+    if (!newTech.title) return;
 
     const sendToken = prevToken.current.token;
 
-    //console.log(putObj)
-    // const [title, ]
-
-    axios.put(`http://localhost:5000/api/list/${putObj.id}`,
-        {
-          title: putObj.title,
-          note: putObj.note
-        }, 
+    axios
+    .post('http://localhost:5000/api/list', 
+      {newTech},
         { headers: {
-          'x-auth-token': sendToken
+        'x-auth-token': sendToken
         }
-    })
-      .then(res => fetchAll(sendToken))
-      .catch(error => console.log(error.message))
+      }
+    )
+    .then(res => setList((list) => [...list, res.data]))
+    .catch(error => console.log(error.message))
+        
+    setTech({});
+
+   }, [newTech])
+  
+  //"delete" 
+  useEffect(() => {
+    
+    if (!deleteID) return;
+
+    const sendToken = prevToken.current.token;
+
+    axios
+    .delete(`http://localhost:5000/api/list/${deleteID}`, 
+      { headers: {
+        'x-auth-token': sendToken
+        }
+      }
+    )
+    .then(res => res.data)
+    .catch(error => console.log(error.message))
+    
+    setDeleteID('');
+
+   }, [deleteID]);
+
+  //"put" USE EFFECT
+  useEffect(() => {
+
+    if (!putObj.title || !putObj.note) return;
+
+    const sendToken = prevToken.current.token;
+
+    axios
+    .put(`http://localhost:5000/api/list/${putObj.id}`,
+      {
+        title: putObj.title,
+        note: putObj.note
+        }, 
+      { headers: {
+          'x-auth-token': sendToken
+          }
+      }
+    )
+    .then(res => fetchAll(sendToken))
+    .catch(error => console.log(error.message))
 
    }, [putObj])
 
