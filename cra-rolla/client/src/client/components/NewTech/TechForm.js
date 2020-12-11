@@ -15,9 +15,11 @@ const TechForm = ({ addTech, name }) => {
   const handleClick = e => {
     e.preventDefault();
 
+    let currDate = new Date().toString().slice(0,15);
+
     addTech({
       title: titleValue, 
-      //date: new Date().toString().slice(0, 15), 
+      date: currDate, 
       note: noteValue,
       name: name
     });

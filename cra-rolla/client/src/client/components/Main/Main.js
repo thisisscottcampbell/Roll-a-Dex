@@ -15,26 +15,30 @@ const Main = ({ name, password, token }) => {
     //INIT STATE
   const [list, setList] = useState([])//needs to be user list;
   const [newTech, setTech] = useState({})
+  const [runDelete, setDelete] = useState(false);
+  const [dbID, setID] = useState('');
   
     //STATE FUNCTIONS
   //add tech
   const addTech = tech => setTech(tech);
-
-  
   //delete tech
   const deleteTech = id => {
     let idx;
 
     list.forEach((tech, i) => {
-      if (id.current === tech.id) idx = i
+      if (id === tech._id) idx = i
     })
 
     list.splice(idx, 1)
 
+
+    setDelete(true);
     setList([...list])
   };
   
-    //CDM: USE EFFECT FUNCTIONALITY
+  //USE EFFECT
+
+    //"CDM" USE EFFECT 
   useEffect(() => {
     console.log('run for cdm');
 
@@ -46,19 +50,16 @@ const Main = ({ name, password, token }) => {
       }
      })
       .then(res => {
-        setList((list) => [...list, ...res.data])
+        setList((list) => [...list, ...res.data]);
       })
       .catch(error => console.log(error.message));
 
   },[]);
 
-   //Update list USE EFFECT
+   //"tech" USE EFFECT
    useEffect(() => {
 
       if (!newTech.title) return;
-
-      console.log('tech', newTech)
-      console.log('run for tech');
 
       const sendToken = prevToken.current.token;
 
@@ -74,6 +75,29 @@ const Main = ({ name, password, token }) => {
         .catch(error => console.log(error.message))
    }, [newTech])
   
+
+   //"delete" USE EFFECT
+   useEffect(() => {
+    if (!runDelete) return;
+     console.log('run delete');
+
+      // const sendToken = prevToken.current.token;
+
+      // axios.delete('http://localhost:5000/api/list/:id', 
+      //    { headers: {
+      //       'x-auth-token': sendToken
+      //     },
+      //     params: 
+      // })
+      //   .then(res => {
+      //     setList((list) => [...list, res.data])
+      //   })
+      //   .catch(error => console.log(error.message))
+
+
+    setDelete(false);
+
+   }, [runDelete])
 
   return (
     <div>

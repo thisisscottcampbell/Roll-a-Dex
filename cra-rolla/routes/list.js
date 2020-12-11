@@ -27,12 +27,13 @@ router.post('/', verifyUser,
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
     
     const { id } = req.user;
-    const { title, note, } = req.body.newTech;
+    const { title, note, date } = req.body.newTech;
 
     try {
       const newTech = new Tech({
         title,
         note,
+        date,
         user: id
       });
 
