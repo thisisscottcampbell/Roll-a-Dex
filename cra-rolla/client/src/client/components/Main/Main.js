@@ -28,7 +28,9 @@ const Main = ({ name, password, token }) => {
       if (id === tech._id) idx = i
     })
 
-    list.splice(idx, 1)
+    list.splice(idx, 1);
+
+    console.log(list);
 
     setDeleteID(id);
     setList([...list])
@@ -86,13 +88,8 @@ const Main = ({ name, password, token }) => {
             'x-auth-token': sendToken
           }
       })
-        .then(res => {
-          setList((list) => [...list, res.data])
-        })
+        .then(res => res.data)
         .catch(error => console.log(error.message))
-
-
-    
 
    }, [deleteID], () => console.log(list));
 
