@@ -6,16 +6,13 @@ import axios from 'axios';
 
 const Main = ({ name, password, token }) => {
   
-  //const prevName = useRef(name);
-  //const prevPassword = useRef(password);
   const prevToken = useRef(token);
-  
-  //console.log(prevName, prevPassword, prevToken);
 
     //INIT STATE
   const [list, setList] = useState([])//needs to be user list;
   const [newTech, setTech] = useState({})
   const [deleteID, setDeleteID] = useState('');
+  const [putObj, setPutObj] = useState({})
   
     //STATE FUNCTIONS
   //add tech
@@ -35,6 +32,8 @@ const Main = ({ name, password, token }) => {
     setDeleteID(id);
     setList([...list])
   };
+  //put tech
+  const editTech = (putObj) => setPutObj(putObj)
   
   //USE EFFECT
 
@@ -73,12 +72,14 @@ const Main = ({ name, password, token }) => {
           setList((list) => [...list, res.data])
         })
         .catch(error => console.log(error.message))
+        
+        setTech({})
    }, [newTech])
   
-
    //"delete" USE EFFECT
    useEffect(() => {
- 
+    
+      if (!deleteID) return;
      console.log('run delete');
 
       const sendToken = prevToken.current.token;
@@ -91,7 +92,44 @@ const Main = ({ name, password, token }) => {
         .then(res => res.data)
         .catch(error => console.log(error.message))
 
-   }, [deleteID], () => console.log(list));
+   }, [deleteID]);
+
+   //"put" USE EFFECT
+   useEffect(() => {
+
+    if (!putObj.title || !putObj.note) return;
+    console.log('run put');
+
+    const sendToken = prevToken.current.token;
+
+    //console.log(putObj)
+    // const [title, ]
+
+    axios.put(`http://localhost:5000/api/list/${putObj.id}`,
+        {
+          title: putObj.title,
+          note: putObj.note
+        }, 
+        { headers: {
+          'x-auth-token': sendToken
+        }
+    })
+      .then(res => res.data)
+      .catch(error => console.log(error.message))
+
+      axios.get('http://localhost:5000/api/list', {
+        headers: {
+          'x-auth-token': sendToken
+        }
+       })
+        .then(res => {
+          setList(res.data);
+        })
+        .catch(error => console.log(error.message));
+
+      setPutObj({});
+
+   }, [putObj])
 
   return (
     <div>
@@ -101,7 +139,7 @@ const Main = ({ name, password, token }) => {
         <TechList 
           list={list}
           deleteTech={deleteTech}
-          //editTech={editTech} 
+          editTech={editTech} 
         />
       </Scroll> 
     </div>

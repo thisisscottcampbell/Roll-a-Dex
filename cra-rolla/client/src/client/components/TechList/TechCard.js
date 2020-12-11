@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditTechForm from './EditTechForm'
 
 const TechCard = ({ title, date, note, video, deleteTech, editTech, _id }) => {
   
   const handleDelete = techId => deleteTech(techId);
-  const handleEdit = techId => editTech(techId)
 
-  return (
+  const [showForm, setForm] = useState(false);
+
+
+ if (!showForm) return (
+    
     <div className='tc bg-light-green dib br3 pa3 ma2 grow bw2 shadow-5'>
       <div>
         <h2>{title}</h2>
@@ -19,13 +23,23 @@ const TechCard = ({ title, date, note, video, deleteTech, editTech, _id }) => {
       >Delete</button>
       <br/>
       <button 
-        onClick={()=> handleEdit(_id)}
+        onClick={()=> setForm(true)}
         className="f6 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib light-green"
         style={{marginTop: '.5'}}
       >Edit</button>
       <h6>{date}</h6>
     </div>
   );
+  return (
+    <EditTechForm 
+      setForm={setForm} 
+      editTech={editTech} 
+      title={title} 
+      note={note}
+      date={date} 
+      _id={_id} 
+    />
+  )
 };
 
 export default TechCard;

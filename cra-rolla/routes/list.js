@@ -57,6 +57,8 @@ router.put('/:id', verifyUser,
   if (title) techVals.title = title;
   if (note) techVals.note = note;
 
+  console.log(techVals);
+
   try {
     let editTech = await Tech.findById(id);
 
