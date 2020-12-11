@@ -21,11 +21,7 @@ router.get('/', verifyUser,
 })
 
 router.post('/', verifyUser, 
-  [
-    check('title', 'Please add title')
-    .not()
-    .isEmpty()
-  ], 
+
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });

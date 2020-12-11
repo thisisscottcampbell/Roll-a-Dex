@@ -6,11 +6,11 @@ import axios from 'axios';
 
 const Main = ({ name, password, token }) => {
   
-  const prevName = useRef(name);
-  const prevPassword = useRef(password);
+  //const prevName = useRef(name);
+  //const prevPassword = useRef(password);
   const prevToken = useRef(token);
 
-  console.log(prevName, prevPassword, prevToken);
+  //console.log(prevName, prevPassword, prevToken);
 
     //INIT STATE
   const [list, setList] = useState([])//needs to be user list;
@@ -38,18 +38,11 @@ const Main = ({ name, password, token }) => {
   useEffect(() => {
     console.log('run for cdm');
 
-    //assign user name to variable userName
-    const userObj = {
-      name: prevName.current,
-      password: prevPassword.current,
-      token: prevToken.current
-    }
-
-    // console.log(userObj.token.token)
+    const sendToken = prevToken.current.token;
 
     axios.get('http://localhost:5000/api/list', {
       headers: {
-        'x-auth-token': userObj.token.token
+        'x-auth-token': sendToken
       }
      })
       .then(res => {
@@ -67,7 +60,14 @@ const Main = ({ name, password, token }) => {
       console.log('tech', newTech)
       console.log('run for tech');
 
-      axios.post('http://localhost:5000/api/list', {newTech})
+      const sendToken = prevToken.current.token;
+
+      axios.post('http://localhost:5000/api/list', 
+        {newTech},
+        { headers: {
+        'x-auth-token': sendToken
+        }
+      })
         .then(res => {
           setList((list) => [...list, res.data])
         })
