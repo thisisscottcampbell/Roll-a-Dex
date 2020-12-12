@@ -7,9 +7,10 @@ import './App.css';
 
 const App = () => {
 
-  const [name, setName] = useState(() => '');
-  const [password, setPassword] = useState(() => '')
-  const [token, setToken] = useState(() => '')
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('')
+  const [token, setToken] = useState('')
+  const [signedUp, setSignUp] = useState('')
  
   const submitUser = (name, password) => {
 

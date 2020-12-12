@@ -8,6 +8,10 @@ const Main = ({ name, password, token }) => {
   
   const prevToken = useRef(token);
 
+  const isTech = useRef(false);
+  const isDelete = useRef(false);
+  const isPut = useRef(false);
+
     //INIT STATE
   const [list, setList] = useState([])//needs to be user list;
   const [newTech, setTech] = useState({})
@@ -27,7 +31,10 @@ const Main = ({ name, password, token }) => {
     .catch(error => console.log(error.message));
   }
   //add tech
-  const addTech = tech => setTech(tech);
+  const addTech = tech => {
+    isTech.current = true;
+    setTech(tech)
+  };
   //delete tech
   const deleteTech = id => {
     let idx;
@@ -38,11 +45,15 @@ const Main = ({ name, password, token }) => {
 
     list.splice(idx, 1);
 
+    isDelete.current = true;
     setDeleteID(id);
     setList([...list])
   };
   //put tech
-  const editTech = (putObj) => setPutObj(putObj);
+  const editTech = (putObj) => {
+    isPut.current = true;
+    setPutObj(putObj)
+  };
 
   
     //USE EFFECT
@@ -67,7 +78,7 @@ const Main = ({ name, password, token }) => {
   //"post" 
   useEffect(() => {
 
-    if (!newTech.title) return;
+    if (!isTech.current) return;
 
     const sendToken = prevToken.current.token;
 
@@ -82,14 +93,14 @@ const Main = ({ name, password, token }) => {
     .then(res => setList((list) => [...list, res.data]))
     .catch(error => console.log(error.message))
         
-    setTech({});
+    isTech.current = false;
 
    }, [newTech])
   
   //"delete" 
   useEffect(() => {
     
-    if (!deleteID) return;
+    if (!isDelete.current) return;
 
     const sendToken = prevToken.current.token;
 
@@ -103,14 +114,14 @@ const Main = ({ name, password, token }) => {
     .then(res => res.data)
     .catch(error => console.log(error.message))
     
-    setDeleteID('');
+    isDelete.current = false;
 
    }, [deleteID]);
 
   //"put" USE EFFECT
   useEffect(() => {
 
-    if (!putObj.title || !putObj.note) return;
+    if (!isPut.current) return;
 
     const sendToken = prevToken.current.token;
 
@@ -128,6 +139,7 @@ const Main = ({ name, password, token }) => {
     .then(res => fetchAll(sendToken))
     .catch(error => console.log(error.message))
 
+    isPut.current = false;
    }, [putObj])
 
   return (
