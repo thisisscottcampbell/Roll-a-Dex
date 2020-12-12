@@ -26,16 +26,17 @@ const SignIn = ({ submitUser }) => {
           className='pa3 ba b--green bg-lightest-blue'
         />
         <input 
-          type='text'
+          type='password'
           value={pwInput} 
           onChange={updatePwValue}
           placeholder="password"
           className='pa3 ba b--green bg-lightest-blue'
         />
-      <button onClick={handleSubmit}>submit</button>
-      <div className='pa2'>
-        <h1>OR</h1>
-      </div>
+      <button 
+          onClick={handleSubmit}
+          className="f4 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib dark-blue"
+          style={{marginTop: '1.5em'}}
+      >submit</button> 
     </div>
   );
 };

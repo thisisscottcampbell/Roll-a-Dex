@@ -34,7 +34,7 @@ const EditTechForm = ({ setForm, editTech, title, note, _id }) => {
           value={titleValue} 
           onChange={handleTitleChange}
           placeholder='technique name'
-          className='pa1 ba b--light-blue bg-lightest-blue' 
+          className='pa1 ba b--red bg-washed-red' 
         />
         <br/>
         <textarea
@@ -43,7 +43,7 @@ const EditTechForm = ({ setForm, editTech, title, note, _id }) => {
           value={noteValue} 
           onChange={handleNoteChange}
           placeholder='notes'
-          className='pa1 ba b--green bg-washed-green' 
+          className='pa1 ba b--red bg-washed-yellow' 
         />
       </form>
       <button 

@@ -18,7 +18,7 @@ const SignUp = ({ submitUser }) => {
     axios.post('http://localhost:5000/api/register', userObj)
      .then(res => console.log(res.data))
      .catch(error => console.log(error))
-     .then(submitUser(userInput, pwInput))
+     .then(submitUser(userInput, pwInput, true))
 
      resetUser();
      resetPw();
@@ -35,13 +35,17 @@ const SignUp = ({ submitUser }) => {
           className='pa3 ba b--green bg-lightest-blue'
         />
         <input 
-          type='text'
+          type='password'
           value={pwInput} 
           onChange={updatePwValue}
           placeholder="password"
           className='pa3 ba b--green bg-lightest-blue'
         />
-      <button onClick={handleSubmit}>submit</button> 
+        <button 
+          onClick={handleSubmit}
+          className="f4 bg-washed-blue grow no-underline br-pill ba ph3 pv2 mb2 dib dark-blue"
+          style={{marginTop: '1.5em'}}
+        >submit</button> 
     </div>
   );
 };
