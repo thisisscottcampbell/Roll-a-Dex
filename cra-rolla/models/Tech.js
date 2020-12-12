@@ -14,8 +14,9 @@ const TechSchema = new Schema({
     type: String
   },
   date: {
-    type: Date,
-    default: new Date().toString().slice(0, 15)}
+    type: String
+    //default: Date.now
+  }
   //video: ...
 });
 

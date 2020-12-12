@@ -7,8 +7,12 @@ const verifyUser = require('../controllers/auth')
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
+
+
+
 //get logged in user
-router.get('/', verifyUser, async (req, res) => { 
+router.get('/', verifyUser, 
+  async (req, res) => { 
   const {id} = req.user;
 
   try {

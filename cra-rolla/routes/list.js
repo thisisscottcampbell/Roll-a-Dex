@@ -21,22 +21,19 @@ router.get('/', verifyUser,
 })
 
 router.post('/', verifyUser, 
-  [
-    check('title', 'Please add title')
-    .not()
-    .isEmpty()
-  ], 
+
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
     
     const { id } = req.user;
-    const { title, note, } = req.body;
+    const { title, note, date } = req.body.newTech;
 
     try {
       const newTech = new Tech({
         title,
         note,
+        date,
         user: id
       });
 
@@ -59,6 +56,8 @@ router.put('/:id', verifyUser,
   
   if (title) techVals.title = title;
   if (note) techVals.note = note;
+
+  console.log(techVals);
 
   try {
     let editTech = await Tech.findById(id);
@@ -88,13 +87,13 @@ router.delete('/:id', verifyUser,
     let delTech = await Tech.findById(req.params.id);
 
     if (!delTech) return res.status(404).json({ msg: 'Cannot locate item' });
-
     if (delTech.user.toString() !== req.user.id) return res.status(401).json({ msg: "No DELETE auth"});
     
     await Tech.findByIdAndRemove(id);
 
     res.json({msg: 'delete successful'});
   }
+  
   catch (err) {
     console.error(err.message);
     return res.status(500).send('Server Error');

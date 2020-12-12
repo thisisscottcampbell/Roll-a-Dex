@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import inputHook from '../../hooks/inputHook';
 
 const SignUp = ({ submitUser }) => {
@@ -9,12 +10,20 @@ const SignUp = ({ submitUser }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    submitUser(userInput, pwInput);
+    const userObj = {
+      name: userInput,
+      password: pwInput
+    };
 
-    resetUser();
-    resetPw();
-  }
+    axios.post('http://localhost:5000/api/register', userObj)
+     .then(res => console.log(res.data))
+     .catch(error => console.log(error))
+     .then(submitUser(userInput, pwInput))
 
+     resetUser();
+     resetPw();
+    }
+  
   return (
     <div className='pa2'>
       <h1 className='f1 b'>Sign Up</h1> 

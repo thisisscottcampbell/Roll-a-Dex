@@ -6,9 +6,10 @@ const TechList = ({ list, deleteTech, editTech }) => {
 
   const techniqueEntries = list.map(tech => {
     // <Link>
-    console.log(tech);
-     return <TechCard 
-        key={tech.id}
+    //console.log(tech.id);
+     return <TechCard
+        _id={tech._id} 
+        key={tech._id}
         id={tech.id}
         title={tech.title}
         date={tech.date}

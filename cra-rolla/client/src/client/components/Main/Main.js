@@ -2,87 +2,155 @@ import React,{ useState, useEffect, useRef } from 'react';
 import NewTech from '../NewTech/NewTech';
 import TechList from '../TechList/TechList';
 import Scroll from '../TechList/Scroll';
+import axios from 'axios';
 
-const Main = ({ name, password }) => {
+const Main = ({ name, password, token }) => {
   
-  //keep value of prop in variable
-  console.log(name, password);
-  
+  const prevToken = useRef(token);
 
-  const prevName = useRef(name);
-  const prevPassword = useRef(password);
-  
-  console.log(prevName.current, prevPassword.current);
-
+  const isTech = useRef(false);
+  const isDelete = useRef(false);
+  const isPut = useRef(false);
 
     //INIT STATE
-  //set state, the user's list of techniques
-  const [list, setList] = useState(() => [])//needs to be user list;
+  const [list, setList] = useState([])//needs to be user list;
+  const [newTech, setTech] = useState({})
+  const [deleteID, setDeleteID] = useState('');
+  const [putObj, setPutObj] = useState({})
   
-  //assign true to variable on first render
-  //let firstRender = useRef(true);
-
     //STATE FUNCTIONS
-  //when we get a new technique, we update state
-  const updateList = newTech => setList([...list, newTech]);
-  
-  //delete a technique
+  //get all
+  const fetchAll = (token) => {
+    axios
+    .get('http://localhost:5000/api/list', {
+      headers: {
+        'x-auth-token': token
+        }
+      })
+    .then(res => setList(res.data))
+    .catch(error => console.log(error.message));
+  }
+  //add tech
+  const addTech = tech => {
+    isTech.current = true;
+    setTech(tech)
+  };
+  //delete tech
   const deleteTech = id => {
     let idx;
 
     list.forEach((tech, i) => {
-      if (id.current === tech.id) idx = i
+      if (id === tech._id) idx = i
     })
 
-    list.splice(idx, 1)
+    list.splice(idx, 1);
 
+    isDelete.current = true;
+    setDeleteID(id);
     setList([...list])
   };
-  // //edit technique
-  // const editTech = id => {
-  //   console.log(`how to edit ${id.current}...`)
-  // }
+  //put tech
+  const editTech = (putObj) => {
+    isPut.current = true;
+    setPutObj(putObj)
+  };
+
   
-    //USE EFFECT FUNCTIONALITY
-  //locate user in db, render their list of techniques
+    //USE EFFECT
+  //"cdm"
+  useEffect(() => {
+    console.log('run for cdm');
+
+    const sendToken = prevToken.current.token;
+
+    axios
+    .get('http://localhost:5000/api/list', {
+      headers: {
+        'x-auth-token': sendToken
+        }
+      }
+    )
+    .then(res => setList(res.data))
+    .catch(error => console.log(error.message));
+
+  },[]);
+
+  //"post" 
   useEffect(() => {
 
-    //only update firstRender to false if on first render
-    //if (firstRender.current) return firstRender.current = false;
+    if (!isTech.current) return;
 
-    //assign user name to variable userName
-    const name = prevName.current;
+    const sendToken = prevToken.current.token;
 
-    //assign newly added technique to state list to a variable tech
-    //const tech = list[list.length - 1];
+    axios
+    .post('http://localhost:5000/api/list', 
+      {newTech},
+        { headers: {
+        'x-auth-token': sendToken
+        }
+      }
+    )
+    .then(res => setList((list) => [...list, res.data]))
+    .catch(error => console.log(error.message))
+        
+    isTech.current = false;
 
-    //initialzie a variable userIdx
-    //let userIdx;
-
-    //find the index of the user's user obj in the db, update userIdx
-    // db.forEach((user, i) => {
-    //   if (user.name === userName) userIdx = i;
-    // })
-
-    //assign current user's data to a variable
-    //const userData = db[userIdx];
-
-    //add new technique to the current user's list of techniques
-    // userData.list.push(tech);
-
-  }, [list]);
+   }, [newTech])
   
+  //"delete" 
+  useEffect(() => {
+    
+    if (!isDelete.current) return;
+
+    const sendToken = prevToken.current.token;
+
+    axios
+    .delete(`http://localhost:5000/api/list/${deleteID}`, 
+      { headers: {
+        'x-auth-token': sendToken
+        }
+      }
+    )
+    .then(res => res.data)
+    .catch(error => console.log(error.message))
+    
+    isDelete.current = false;
+
+   }, [deleteID]);
+
+  //"put" USE EFFECT
+  useEffect(() => {
+
+    if (!isPut.current) return;
+
+    const sendToken = prevToken.current.token;
+
+    axios
+    .put(`http://localhost:5000/api/list/${putObj.id}`,
+      {
+        title: putObj.title,
+        note: putObj.note
+        }, 
+      { headers: {
+          'x-auth-token': sendToken
+          }
+      }
+    )
+    .then(res => fetchAll(sendToken))
+    .catch(error => console.log(error.message))
+
+    isPut.current = false;
+   }, [putObj])
 
   return (
     <div>
       <h2 className='f2 light-green'>{name}'s Roll-a-Dex</h2>
-      <h2>Password = {password}</h2>
-      <NewTech updateList={updateList} />
+      <NewTech addTech={addTech} name={name} />
       <Scroll>
         <TechList 
           list={list}
           deleteTech={deleteTech}
-          //editTech={editTech} 
+          editTech={editTech} 
         />
       </Scroll> 
     </div>

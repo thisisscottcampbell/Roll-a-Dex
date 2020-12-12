@@ -2,7 +2,7 @@ import React from 'react';
 import inputHook from '../../hooks/inputHook';
 //import { uuid } from 'uuidv4';
 
-const TechForm = ({ addTech, name }) => {
+const EditTechForm = ({ setForm, editTech, title, note, _id }) => {
 
   const [titleValue, handleTitleChange, titleReset] = inputHook('');
   const [noteValue, handleNoteChange, noteReset] = inputHook('');
@@ -15,15 +15,13 @@ const TechForm = ({ addTech, name }) => {
   const handleClick = e => {
     e.preventDefault();
 
-    let currDate = new Date().toString().slice(0,15);
+    const editObj = {id: _id}
 
-    addTech({
-      title: titleValue, 
-      date: currDate, 
-      note: noteValue,
-      name: name
-    });
-    
+    if (titleValue) editObj.title = titleValue;
+    if (noteValue) editObj.note = noteValue;
+
+    setForm(false)
+    editTech(editObj);
     resetAll()
   }
 
@@ -61,4 +59,5 @@ const TechForm = ({ addTech, name }) => {
   );
 };
 
-export default TechForm;
+
+export default EditTechForm;
