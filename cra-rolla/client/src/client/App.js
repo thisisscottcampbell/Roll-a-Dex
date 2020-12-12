@@ -10,9 +10,9 @@ const App = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
-  const [signedUp, setSignUp] = useState('')
+  const [onlySignIn, setSignIn] = useState(false)
  
-  const submitUser = (name, password) => {
+  const submitUser = (name, password, bool) => {
 
     const userObj = {
       name: name,
@@ -27,19 +27,30 @@ const App = () => {
         setToken(res.data);
       })
       .catch(error => console.log(error))
+    
+    setSignIn(bool);
   };
 
-  return (
+  if (onlySignIn) return (
     <div className='App tc'>
-      {
-        token ?
-          <Main name={name} password={password} token={token} />
-          :
-          <> 
-            <SignIn submitUser={submitUser} />
-            <SignUp submitUser={submitUser} />
-          </>
-      }
+      <SignIn submitUser={submitUser} />
+    </div>
+  )
+
+  if (token) return (
+    <div className='App tc'>
+      <Main 
+        name={name} 
+        password={password} 
+        token={token} 
+      /> 
+    </div>
+  )
+
+  return (
+    <div className='App tc'> 
+      <SignIn submitUser={submitUser} />
+      <SignUp submitUser={submitUser} />
     </div>
   )
 }
